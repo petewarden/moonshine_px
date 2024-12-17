@@ -5,9 +5,11 @@ def _get_onnx_weights(model_name):
         raise ValueError(f"Unknown model \"{model_name}\"")
     repo = f"onnx-community/moonshine-{model_name}-ONNX"
 
+    suffix = "_uint8"
+
     return (
         hf_hub_download(repo, f"{x}.onnx", subfolder="onnx")
-        for x in ("encoder_model", "decoder_model_merged")
+        for x in (f"encoder_model{suffix}", f"decoder_model_merged{suffix}")
     )
 
 

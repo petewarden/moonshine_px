@@ -1,8 +1,8 @@
 from pathlib import Path
 import tokenizers
-from .model import MoonshineOnnxModel
+from model import MoonshineOnnxModel
 
-from . import ASSETS_DIR
+ASSETS_DIR = Path(__file__).parents[0] / "assets"
 
 
 def load_audio(audio):
@@ -68,3 +68,16 @@ def benchmark(audio, model="moonshine/base"):
     elapsed_time /= 1e6
 
     print(f"Time to transcribe {num_seconds:.2f}s of speech is {elapsed_time:.2f}ms")
+
+if __name__ == "__main__":
+    import sys
+
+    if len(sys.argv) < 2:
+        print(f"Usage: {sys.argv[0]} <audio_file>")
+        sys.exit(1)
+
+    model = "moonshine/tiny"
+
+    audio_file = sys.argv[1]
+    print(transcribe(audio_file, model=model))
+    benchmark(audio_file, model=model)
